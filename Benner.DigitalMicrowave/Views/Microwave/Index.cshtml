@@ -1,0 +1,69 @@
+﻿@model MicrowaveViewModel
+
+@{
+    Layout = "_Layout";
+}
+
+
+@using (Html.BeginForm("Start", "Microwave", FormMethod.Post, htmlAttributes: new { id = "microwave-form" }))
+{
+    <div class="alert alert-info" id="connecting-microwave">
+        <p>Conectando...</p>
+    </div>
+
+    <div class="alert alert-danger hide" id="errors">
+
+    </div>
+
+    <div class="row form-group">
+        <div class="col-md-12">
+            <label>Input</label>
+            <textarea asp-for="Text" class="form-control" id="timer-input"></textarea>
+        </div>
+    </div>
+
+    <div class="row form-group">
+        <div class="col-md-3">
+            <label>Tempo (Segundos)</label>
+            <input type="number" class="form-control" asp-for="Time" />
+        </div>
+
+        <div class="col-md-3">
+            <label>Potência</label>
+            <input type="number" class="form-control" asp-for="Power" />
+        </div>
+    </div>
+
+    <div class="row form-group">
+        <div class="col-md-6">
+            <select id="microwave-programs" class="form-control" asp-for="ProgramName" asp-items="Model.Programs">
+                <option value="">- Programas - </option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row form-group hide" id="program-container">
+        <div class="col-md-12 form-group">
+            <label>Instruções</label>
+            <textarea class="form-control" readonly="readonly" id="program-instructions"></textarea>
+        </div>
+        <div class="col-md-3">
+            <label>Caractere de Aquecimento</label>
+            <input type="text" readonly="readonly" class="form-control" id="program-heating-character"/>
+        </div>
+    </div>
+
+    <div class="row form-group">
+        <div class="col-md-6">
+            <button type="button" class="action-button btn btn-dark mr-1" id="start-button">Iniciar</button>
+            <button type="button" class="action-button btn btn-dark" id="fast-start-button">Início Rápido</button>
+            <button type="button" class="action-button btn btn-info" id="pause-button">Pausar</button>
+            <button type="button" class="action-button btn btn-danger" id="cancel-button">Cancelar</button>
+        </div>
+    </div>
+}
+
+@section Scripts
+{
+    <script src="~/js/microwave.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,56 @@
+﻿@model CreateProgramViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+@using (@Html.BeginForm(FormMethod.Post))
+{
+    <div asp-validation-summary="ModelOnly">
+    </div>
+
+    <div class="row form-group">
+        <div class="col-md-6">
+            <label>Nome</label>
+            <input class="form-control" asp-for="@Model.Name" />
+            <span class="text-danger" asp-validation-for="@Model.Name"></span>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-6">
+            <label>Instruções</label>
+            <input class="form-control" asp-for="@Model.Instructions" />
+            <span class="text-danger" asp-validation-for="@Model.Instructions"></span>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-6">
+            <label>Potência</label>
+            <input class="form-control"  asp-for="@Model.Power" />
+            <span class="text-danger" asp-validation-for="@Model.Power"></span>
+        </div>
+    </div>
+
+    <div class="row form-group">
+        <div class="col-md-6">
+            <label>Tempo (Segundos)</label>
+            <input class="form-control"  asp-for="@Model.Time" />
+            <span class="text-danger" asp-validation-for="@Model.Time"></span>
+        </div>
+    </div>
+
+     <div class="row form-group">
+        <div class="col-md-6">
+            <label>Caractere de Aquecimento</label>
+            <input class="form-control"  asp-for="@Model.HeatingCharacter" />
+            <span class="text-danger" asp-validation-for="@Model.HeatingCharacter"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-dark">Salvar</button>
+        </div>
+    </div>
+
+}

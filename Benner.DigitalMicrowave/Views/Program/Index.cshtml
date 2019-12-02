@@ -1,0 +1,44 @@
+@model IEnumerable<ProgramViewModel>
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="row form-group">
+    <div class="col-md-12 text-right">
+        <a href="@Url.Action("Create", "Program")" class="btn btn-dark">
+            Novo Programa
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-stripped">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Instrução</th>
+                    <th>Tempo (Segundos)</th>
+                    <th>Potência</th>
+                    <th>Caractere de Aquecimento</th>
+                    <!-- <th>Ações</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in Model){
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Instructions</td>
+                        <td>@item.Time</td>
+                        <td>@item.Power</td>
+                        <td>@item.HeatingCharacter</td>
+                        <!-- <td>
+                            <button class="btn btn-info">Editar</button>
+                        </td> -->
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
