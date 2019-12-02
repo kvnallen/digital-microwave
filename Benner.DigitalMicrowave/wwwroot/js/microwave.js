@@ -84,7 +84,7 @@
             (message, currentTime) => updateState({ working: false, message, currentTime }));
 
         connection.on("timerCancelled",
-            (message) => updateState({ working: false, message }));
+            (message) => updateState({ working: false, message: '' }));
     }
 
     function updateState({ working, message, currentTime }) {
@@ -101,16 +101,7 @@
     }
 
     function start() {
-
         const data = getOptions();
-        if (originalInput) {
-            $('#timer-input').val(originalInput);
-            data.text = originalInput
-        } else {
-            originalInput = data.text;
-        }
-
-
         sendPost({ url: '/microwave/start', data })
     }
 
@@ -128,10 +119,18 @@
     }
 
     function getOptions() {
+        const text = originalInput || $('#timer-input').val();
+
+        if (originalInput) {
+            $('#timer-input').val(originalInput);
+        } else {
+            originalInput = text;
+        }
+
         return {
             time: Number($('#Time').val()),
             power: Number($('#Power').val()),
-            text: $('#timer-input').val(),
+            text: text,
             programName: $('#microwave-programs').val()
         }
     }
