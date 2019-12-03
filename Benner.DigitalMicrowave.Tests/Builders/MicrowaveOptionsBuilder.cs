@@ -8,7 +8,7 @@ namespace Benner.DigitalMicrowave.Tests
         private int _time = 1;
         private int _power = 1;
         private string _text = "Chicken";
-
+        private int? _currentTime;
 
         public MicrowaveOptionsBuilder ForLong(int time)
         {
@@ -28,12 +28,18 @@ namespace Benner.DigitalMicrowave.Tests
             return this;
         }
 
+        public MicrowaveOptionsBuilder CurrentTime(int time)
+        {
+            _currentTime = time;
+            return this;
+        }
+
         public static MicrowaveOptionsBuilder New() 
             => new MicrowaveOptionsBuilder();
 
         public MicrowaveOptions Build()
         {
-            return new MicrowaveOptions(_time, _power, _text, ".");
+            return new MicrowaveOptions(_time, _power, _text, ".", currentTime: _currentTime);
         }
     }
 }

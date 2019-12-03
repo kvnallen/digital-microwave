@@ -19,12 +19,13 @@ namespace Benner.DigitalMicrowave.Core.Models
             Options = options;
             OriginalText = Options.Text;
             State = MicrowaveState.Idle;
+            _currentSecond = options.CurrentTime ?? 0;
         }
 
         public async Task<string> Warm(IEnumerable<IMicrowaveNotifier> notifiers)
         {
+            var text = new StringBuilder(GetInitialText());
             State = MicrowaveState.Running;
-            var text = new StringBuilder(Options.Text);
 
             while (_currentSecond < Options.Time)
             {
@@ -53,6 +54,11 @@ namespace Benner.DigitalMicrowave.Core.Models
             }
 
             return text.ToString();
+        }
+
+        private string GetInitialText()
+        {
+            return $"{Options.Text}{Options.HeatingCharacter.Repeat(Options.Power * Options.CurrentTime)}";
         }
 
         public void Cancel()

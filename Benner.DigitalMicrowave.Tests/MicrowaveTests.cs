@@ -1,7 +1,3 @@
-using System;
-using System.Diagnostics;
-using AutoMoqCore;
-using Benner.DigitalMicrowave.Core;
 using Benner.DigitalMicrowave.Core.Events;
 using Benner.DigitalMicrowave.Core.Models;
 using FluentAssertions;
@@ -30,6 +26,25 @@ namespace Benner.DigitalMicrowave.Tests
                 .New()
                 .ForLong(time)
                 .WithPower(power)
+                .Build();
+
+            var microwave = new Microwave(options);
+
+            var result = await microwave.Warm(new[] { _notifier.Object });
+
+            result.Should().Be(expected);
+        }
+
+        [Theory]
+        [InlineData(3, 2, 2, "Chicken......")]
+        [InlineData(1, 1, 1, "Chicken.")]
+        public async void Warm_WhenExistsCurrentTime_ShouldReturnValidTimer(int time, int power, int currentTime, string expected)
+        {
+            var options = MicrowaveOptionsBuilder
+                .New()
+                .ForLong(time)
+                .WithPower(power)
+                .CurrentTime(currentTime)
                 .Build();
 
             var microwave = new Microwave(options);
