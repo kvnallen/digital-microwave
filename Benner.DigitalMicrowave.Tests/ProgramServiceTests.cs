@@ -4,6 +4,7 @@ using Benner.DigitalMicrowave.Core;
 using Benner.DigitalMicrowave.Core.Commands;
 using Benner.DigitalMicrowave.Core.Models;
 using Benner.DigitalMicrowave.Core.Services;
+using Benner.DigitalMicrowave.Tests.Builders;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Moq;
@@ -48,7 +49,7 @@ namespace Benner.DigitalMicrowave.Tests
 
             _repository
                 .Setup(x => x.GetByName(It.IsAny<string>()))
-                .Returns(new MicrowaveProgram(_command.Name, _command.Instructions, _command.Time, _command.Power, _command.HeatingCharacter));
+                .Returns(MicrowaveProgramBuilder.New().Build());
 
             Action act = () => _service.Add(_command);
             

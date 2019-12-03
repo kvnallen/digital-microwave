@@ -14,7 +14,6 @@ namespace Benner.DigitalMicrowave.Core.Models
         public MicrowaveState State { get; private set; }
         private int _currentSecond = 0;
 
-
         public Microwave(MicrowaveOptions options)
         {
             Options = options;
@@ -22,22 +21,22 @@ namespace Benner.DigitalMicrowave.Core.Models
             State = MicrowaveState.Idle;
         }
 
-
         public async Task<string> Warm(IEnumerable<IMicrowaveNotifier> notifiers)
         {
             State = MicrowaveState.Running;
             var text = new StringBuilder(Options.Text);
 
-            for (var i = _currentSecond; i < Options.Time; i++)
+            while (_currentSecond < Options.Time)
             {
                 if (State == MicrowaveState.Cancelled)
                 {
-                    await notifiers.NotifyCancellation(text.ToString(), i);
+                    await notifiers.NotifyCancellation(text.ToString());
                     break;
                 }
 
                 if (State == MicrowaveState.Idle)
                 {
+                    await notifiers.NotifyPause(text.ToString(), _currentSecond);
                     break;
                 }
 
@@ -48,7 +47,7 @@ namespace Benner.DigitalMicrowave.Core.Models
                 _currentSecond++;
             }
 
-            if (State != MicrowaveState.Cancelled)
+            if (State == MicrowaveState.Running)
             {
                 await notifiers.NotifyFinished(text.ToString());
             }

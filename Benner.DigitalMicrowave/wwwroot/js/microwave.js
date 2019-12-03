@@ -84,7 +84,7 @@
             (message, currentTime) => updateState({ working: false, message, currentTime }));
 
         connection.on("timerCancelled",
-            (message) => updateState({ working: false, message: '' }));
+            () => updateState({ working: false, message: '' }));
     }
 
     function updateState({ working, message, currentTime }) {
@@ -96,7 +96,6 @@
             .attr('disabled', working);
 
         $('#current-time').val(currentTime);
-
         $('#microwave-programs').attr('disabled', working)
     }
 
@@ -127,8 +126,12 @@
             originalInput = text;
         }
 
+        const currentTime = $('#current-time').val();
+        const time = $('#Time').val();
+
         return {
-            time: Number($('#Time').val()),
+            time: Number(time),
+            currentTime: currentTime ? Number(currentTime) : null,
             power: Number($('#Power').val()),
             text: text,
             programName: $('#microwave-programs').val()

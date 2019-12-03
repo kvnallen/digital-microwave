@@ -43,23 +43,17 @@ namespace Benner.DigitalMicrowave.Core.Services
             var options = GetOptions(command);
             var notifiers = _notifiers.Where(x => x.IsSatisfied(options)).ToList();
             var microwave = new Microwave(options);
+            var program = options.Program;
 
-            if (options.Program != null
+            if (program != null
                && !options.IsFile()
-               && !IsFoodCompatible(options.Program, options.Text))
+               && !program.IsCompatibleForFood(options.Text))
             {
                 throw new InvalidOperationException(Errors.INCOMPATIBLE_FOOD);
             }
 
             _repository.Store(microwave);
             return (microwave, notifiers);
-        }
-
-        private bool IsFoodCompatible(MicrowaveProgram program, string food)
-        {
-            return food
-                .Split(" ")
-                .Any(word => program.Name.Contains(word, StringComparison.InvariantCultureIgnoreCase));
         }
 
         public void Cancel()

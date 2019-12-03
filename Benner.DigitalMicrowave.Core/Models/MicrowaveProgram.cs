@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Benner.DigitalMicrowave.Core.Models
 {
@@ -47,6 +48,16 @@ namespace Benner.DigitalMicrowave.Core.Models
         public static bool operator !=(MicrowaveProgram left, MicrowaveProgram right)
         {
             return !(left == right);
+        }
+
+        public bool IsCompatibleForFood(string food)
+        {
+            if (string.IsNullOrEmpty(food))
+                return false;
+
+            return food
+                .Split(" ")
+                .Any(word => Name.Contains(word, StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }

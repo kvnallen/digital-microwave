@@ -22,7 +22,7 @@ namespace Benner.DigitalMicrowave.Core.Extensions
             }
         }
 
-        public static async Task NotifyCancellation(this IEnumerable<IMicrowaveNotifier> notifiers, string text, int currentSecond)
+        public static async Task NotifyCancellation(this IEnumerable<IMicrowaveNotifier> notifiers, string text)
         {
             foreach (var notifier in notifiers)
             {

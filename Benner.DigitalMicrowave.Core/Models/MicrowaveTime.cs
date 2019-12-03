@@ -24,11 +24,6 @@ namespace Benner.DigitalMicrowave.Core.Models
             return new MicrowaveTime(timeInSeconds);
         }
 
-        public static implicit operator TimeSpan(MicrowaveTime time)
-        {
-            return TimeSpan.FromSeconds(time);
-        }
-
         public static implicit operator int(MicrowaveTime time)
         {
             return time.Value;
